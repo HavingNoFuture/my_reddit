@@ -1,0 +1,17 @@
+### Python ###
+.idea/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+core/.env
+
+*.sqlite3
+*.jpg
+*.png
+venv/
+*/migrations/00*
+
+### Project specific ###
+settings_local.py
