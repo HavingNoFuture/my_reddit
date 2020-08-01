@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from .managers import CustomUserManager
 
@@ -22,7 +23,7 @@ class User(AbstractUser):
 
 class Post(models.Model):
     """Модель поста."""
-    author = models.ForeignKey('User', verbose_name="Автор", on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Автор", on_delete=models.SET_NULL, null=True)
     text = models.TextField("Текст")
     title = models.CharField("Название", max_length=150)
     pub_date = models.DateTimeField("Дата публикации", auto_now_add=True)
@@ -35,7 +36,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     """Модель комментария. Имеет рекурсию на саму себя."""
-    author = models.ForeignKey('User', verbose_name="Автор", on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Автор", on_delete=models.SET_NULL, null=True)
     pub_date = models.DateTimeField("Дата публикации", auto_now_add=True)
     text = models.TextField("Текст")
     karma = models.IntegerField("Карма пользователя", default=0)

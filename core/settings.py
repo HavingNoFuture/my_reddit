@@ -45,8 +45,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,8 +62,6 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
-
-AUTH_USER_MODEL = 'reddit.User'
 
 DATABASES = {
     'default': {
@@ -115,3 +112,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTH_USER_MODEL = 'reddit.User'
+
+LOGIN_REDIRECT_URL = '/'
