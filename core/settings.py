@@ -116,3 +116,4 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'reddit.User'
 
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/profile/login/'

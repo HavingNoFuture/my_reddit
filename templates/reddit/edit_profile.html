@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="{% url 'edit_profile' %}" method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+        <p>{{ field.label }}: {{ field }}</p>
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+            {{ field.errors }}
+        {% endfor %}
+        <button type="submit">Сохранить</button>
+    </form>
+</body>
+</html>

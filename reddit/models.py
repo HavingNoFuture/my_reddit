@@ -13,6 +13,8 @@ class User(AbstractUser):
     """
     email = models.EmailField(_('email address'), unique=True)
     karma = models.IntegerField("Карма пользователя", default=0)
+    about = models.TextField('О себе', default='', blank=True)
+    phone_number = models.CharField('Номер телефона', max_length=12, default='', blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username',]
     objects = CustomUserManager()
