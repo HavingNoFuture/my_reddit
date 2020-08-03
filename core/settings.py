@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
     'core',
     'reddit',
+    'profile',
 ]
 
 MIDDLEWARE = [
@@ -119,7 +120,7 @@ STATICFILES_DIRS = (STATIC_DIR,)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-AUTH_USER_MODEL = 'reddit.User'
+AUTH_USER_MODEL = 'profile.User'
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/profile/login/'

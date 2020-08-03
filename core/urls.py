@@ -7,6 +7,7 @@ from core import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('reddit.urls')),
+    path('profile/', include('profile.urls')),
 ]
 
 if settings.DEBUG:

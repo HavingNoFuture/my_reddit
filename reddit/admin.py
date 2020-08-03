@@ -1,15 +1,6 @@
 from django.contrib import admin
-from django.contrib.auth import get_user_model
 
 from reddit.models import Post
-
-User = get_user_model()
-
-
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ("id", "username", "email")
-    list_display_links = ("username", "id")
 
 
 @admin.register(Post)
