@@ -1,0 +1,12 @@
+<header>
+    <h3 class="inline-block"><a href="{% url 'post_list' %}">Main Page</a></h3>
+    {% if user.is_authenticated %}
+    <h3 class="inline-block">| Hi, {{ user.username }} </h3>
+    <h3 class="inline-block"> | <a href="{% url 'profile' %}">Profile</a></h3>
+    <h3 class="inline-block"> | <a href="{% url 'logout' %}">Logout</a></h3>
+    {% else %}
+    <h3 class="inline-block"> | <a href="{% url 'login' %}">SignIn</a></h3>
+    <h3 class="inline-block"> | <a href="{% url 'signup' %}">SignUp</a></h3>
+    {% endif %}
+</header>
+<hr>

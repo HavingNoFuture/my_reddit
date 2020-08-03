@@ -1,12 +1,14 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from reddit.forms import CustomUserCreationForm, EditProfileForm
+
+
+# User views
+from reddit.models import Post
 
 
 class SignUpView(generic.CreateView):
@@ -43,3 +45,16 @@ class EditProfileView(LoginRequiredMixin, generic.View):
             user.save()
             return redirect(reverse('profile'))
         return self.get(request, *args, **kwargs)
+
+
+# Post views
+class PostListView(generic.ListView):
+    model = Post
+    queryset = Post.objects.filter(moderation=True)
+    ordering = ("-pub_date",)
+    paginate_by = 3
+
+
+class PostDetailView(generic.DetailView):
+    model = Post
+    queryset = Post.objects.filter(moderation=True)

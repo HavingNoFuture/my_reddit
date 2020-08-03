@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.utils.text import slugify
+
+from transliterate import translit
 
 from .managers import CustomUserManager
 
@@ -31,9 +35,22 @@ class Post(models.Model):
     pub_date = models.DateTimeField("Дата публикации", auto_now_add=True)
     rating = models.IntegerField(default=0)
     moderation = models.BooleanField("Модерация пройдена?", default=False)
+    slug = models.SlugField(blank=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if not self.slug:
+            try:
+                self.slug = f"{int(self.pub_date.timestamp())}-{slugify(translit(self.title))}"
+            except:
+                self.slug = f"{int(self.pub_date.timestamp())}-{slugify(self.title)}"
+            self.save(update_fields=("slug",))
 
     def __str__(self):
         return f'Post by {self.author.username}'
+
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'slug': self.slug})
 
 
 class Comment(models.Model):
