@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+
+{% block title %}Create Post{% endblock title %}
+
+{% block content %}
+    <h1>Create Post</h1>
+    <form action="{% url 'post_create' %}" method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+            <p>{{ field.label }}: </p>
+            {{ field }}
+        {% endfor %}
+        <button type="submit">Create Post</button>
+    </form>
+{% endblock content %}

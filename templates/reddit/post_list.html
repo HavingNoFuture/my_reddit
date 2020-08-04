@@ -3,7 +3,7 @@
 {% block title %}Post List{% endblock title %}
 
 {% block content %}
-    <h1>Post List</h1>
+    <h1>Post List | <a href="{% url 'post_create' %}">Create Post</a></h1>
     {% for post in post_list %}
         <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
         <p>Author: {{ post.author.username }}</p>
