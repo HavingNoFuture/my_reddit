@@ -8,4 +8,6 @@
     <p>by {{ post.author.username }} at {{ post.pub_date}}}</p>
     <p>Rating: {{ post.rating }}</p>
     <p>{{ post.text }}</p>
+    <hr>
+    {% include 'include/comments.html' %}
 {% endblock content %}

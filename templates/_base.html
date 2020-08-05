@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 {% load static %}
+{% load bootstrap3 %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock title %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <script src="{% bootstrap_jquery_url %}"></script>
+    {% bootstrap_javascript %}
+    {% bootstrap_css %}
 </head>
 <body>
     {% include 'include/header.html' %}

@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
@@ -45,19 +46,38 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'slug': self.slug})
 
+    def get_comments(self):
+        return self.comments.order_by('path')
+
 
 class Comment(models.Model):
     """Модель комментария. Имеет рекурсию на саму себя."""
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Автор", on_delete=models.SET_NULL, null=True)
+    path = ArrayField(models.IntegerField(), default=list)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Автор",
+                               on_delete=models.SET_NULL, null=True)
     text = models.TextField("Текст")
     pub_date = models.DateTimeField("Дата публикации", auto_now_add=True)
     karma = models.IntegerField("Карма пользователя", default=0)
     moderation = models.BooleanField("Модерация пройдена?", default=False)
-    parent = models.ForeignKey(
-        "self", verbose_name="Родитель", on_delete=models.SET_NULL, null=True, blank=True
-    )
+    post = models.ForeignKey(Post, verbose_name="Пост", on_delete=models.CASCADE,
+                             related_name="comments")
 
     def __str__(self):
         if self.author is None:
             return 'Anonymous Comment'
         return f'Comment by {self.author}'
+
+    def get_author_username(self):
+        return self.author.username if self.author else 'Anonymous'
+
+    def get_offset(self):
+        level = len(self.path) - 1
+        if level > 5:
+            level = 5
+        return level
+
+    def get_col(self):
+        level = len(self.path) - 1
+        if level > 5:
+            level = 5
+        return 12 - level

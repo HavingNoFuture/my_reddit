@@ -1,0 +1,47 @@
+{% load bootstrap3 %}
+
+<h2>Комментарии</h2>
+{% for comment in post.get_comments %}
+    <a name="comment-{{ comment.id }}"></a>
+    <div class="row" id="{{ comment.id }}">
+        <div class="col-md-{{ comment.get_col }} col-md-offset-{{ comment.get_offset }}">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>{{ comment.get_author_username }}</strong>&nbsp;&nbsp;
+                    {{ comment.pub_date }}
+                    <a href="#comment-{{ comment.id }}">#</a>
+            </div>
+            <div class="panel-body">
+                <div>{{ comment.text|safe }}</div>
+                    {% if comment_form %}<a class="btn btn-default btn-xs pull-right"
+                    onclick="return show_comments_form({{ comment.id }})">
+                    {% bootstrap_icon "share-alt" %}&nbsp;&nbsp;Ответить</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+<h3 id="write_comment"><a onclick="return show_comments_form('write_comment')">Написать комментарий</a></h3>
+<form id="comment_form" action="{% url 'comment_create' slug=post.slug %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form comment_form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">{% bootstrap_icon "comment" %}&nbsp;&nbsp;Комментировать</button>
+    {% endbuttons %}
+</form>
+
+<script>
+    function show_comments_form(parent_comment_id) {
+        if (parent_comment_id == 'write_comment') {
+            document.getElementById('id_parent_comment').value = '';
+        }
+        else {
+            document.getElementById('id_parent_comment').value = parent_comment_id;
+        }
+        const el = document.getElementById(parent_comment_id);
+        const commentForm = document.getElementById('comment_form');
+        el.parentNode.insertBefore(commentForm, el.nextSibling);
+    }
+</script>
