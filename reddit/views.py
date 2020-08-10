@@ -16,7 +16,7 @@ class PostListView(generic.ListView):
     model = Post
     queryset = Post.objects.filter(moderation=True)
     ordering = ("-pub_date",)
-    paginate_by = 3
+    paginate_by = 1
 
 
 class PostDetailView(generic.DetailView):

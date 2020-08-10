@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 {% load static %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock title %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-    <script src="{% bootstrap_jquery_url %}"></script>
-    {% bootstrap_javascript %}
+    {% bootstrap_javascript jquery='full' %}
     {% bootstrap_css %}
+    {% bootstrap_messages %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 </head>
 <body>
     {% include 'include/header.html' %}

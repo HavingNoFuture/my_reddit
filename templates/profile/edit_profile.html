@@ -3,17 +3,19 @@
 {% block title %}Edit Profile{% endblock title %}
 
 {% block content %}
+  <div class="container">
     <h1>Edit Profile</h1>
     <form action="{% url 'edit_profile' %}" method="POST">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
-        {% for field in form %}
-        <p>{{ field.label }}: {{ field }}</p>
-        {% if field.help_text %}
-        <p class="help">{{ field.help_text|safe }}</p>
-        {% endif %}
-            {{ field.errors }}
-        {% endfor %}
-        <button type="submit">Сохранить</button>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}
+      <p>{{ field.label }}: {{ field }}</p>
+      {% if field.help_text %}
+      <p class="help">{{ field.help_text|safe }}</p>
+      {% endif %}
+        {{ field.errors }}
+      {% endfor %}
+      <button type="submit">Сохранить</button>
     </form>
+  </div>
 {% endblock content %}
